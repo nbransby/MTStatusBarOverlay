@@ -375,7 +375,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 		[self addSubviewToBackgroundView:statusBarBackgroundImageView_];
         
 		// Activity Indicator
-		activityIndicator_ = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		//activityIndicator_ = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 		activityIndicator_.frame = CGRectMake(6.f, 3.f, backgroundView_.frame.size.height - 6.f, backgroundView_.frame.size.height - 6.f);
 		activityIndicator_.hidesWhenStopped = YES;
         
@@ -387,7 +387,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 		[self addSubviewToBackgroundView:activityIndicator_];
         
 		// Finished-Label
-		finishedLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(4.f,1.f,backgroundView_.frame.size.height, backgroundView_.frame.size.height-1.f)];
+		//finishedLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(4.f,1.f,backgroundView_.frame.size.height, backgroundView_.frame.size.height-1.f)];
 		finishedLabel_.shadowOffset = CGSizeMake(0.f, 1.f);
 		finishedLabel_.backgroundColor = [UIColor clearColor];
 		finishedLabel_.hidden = YES;
@@ -398,7 +398,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 		[self addSubviewToBackgroundView:finishedLabel_];
         
 		// Status Label 1 is first visible
-		statusLabel1_ = [[UILabel alloc] initWithFrame:CGRectMake(30.f, 0.f, backgroundView_.frame.size.width - 60.f,backgroundView_.frame.size.height-1.f)];
+		statusLabel1_ = [[UILabel alloc] initWithFrame:CGRectMake(0, 0.f, backgroundView_.frame.size.width, backgroundView_.frame.size.height-1.f)];
 		statusLabel1_.backgroundColor = [UIColor clearColor];
 		statusLabel1_.shadowOffset = CGSizeMake(0.f, 1.f);
 		statusLabel1_.font = [UIFont boldSystemFontOfSize:kStatusLabelSize];
@@ -409,7 +409,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 		[self addSubviewToBackgroundView:statusLabel1_];
         
 		// Status Label 2 is hidden
-		statusLabel2_ = [[UILabel alloc] initWithFrame:CGRectMake(30.f, backgroundView_.frame.size.height,backgroundView_.frame.size.width - 60.f , backgroundView_.frame.size.height-1.f)];
+		statusLabel2_ = [[UILabel alloc] initWithFrame:CGRectMake(0, backgroundView_.frame.size.height,backgroundView_.frame.size.width , backgroundView_.frame.size.height-1.f)];
 		statusLabel2_.shadowOffset = CGSizeMake(0.f, 1.f);
 		statusLabel2_.backgroundColor = [UIColor clearColor];
 		statusLabel2_.font = [UIFont boldSystemFontOfSize:kStatusLabelSize];
@@ -509,15 +509,15 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 }
 
 - (void)postMessage:(NSString *)message animated:(BOOL)animated {
-	[self postMessage:message type:MTMessageTypeActivity duration:0 animated:animated immediate:NO];
+	[self postMessage:message type:MTMessageTypeFinish duration:0 animated:animated immediate:NO];
 }
 
 - (void)postMessage:(NSString *)message duration:(NSTimeInterval)duration {
-	[self postMessage:message type:MTMessageTypeActivity duration:duration animated:YES immediate:NO];
+	[self postMessage:message type:MTMessageTypeFinish duration:duration animated:YES immediate:NO];
 }
 
 - (void)postMessage:(NSString *)message duration:(NSTimeInterval)duration animated:(BOOL)animated {
-    [self postMessage:message type:MTMessageTypeActivity duration:duration animated:animated immediate:NO];
+    [self postMessage:message type:MTMessageTypeFinish duration:duration animated:animated immediate:NO];
 }
 
 - (void)postImmediateMessage:(NSString *)message animated:(BOOL)animated {
@@ -982,11 +982,11 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
                              if ([activityIndicator_ respondsToSelector:@selector(setColor:)]) {
                                  CGRect frame = self.statusLabel1.frame;
                                  frame.size.width = self.backgroundView.frame.size.width-60.f;
-                                 self.statusLabel1.frame = frame;
+                                 //self.statusLabel1.frame = frame;
                                  
                                  frame = self.statusLabel2.frame;
                                  frame.size.width = self.backgroundView.frame.size.width-60.f;
-                                 self.statusLabel2.frame = frame;
+                                 //self.statusLabel2.frame = frame;
                              }
 						 }
                          
