@@ -279,7 +279,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-        CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+        CGRect statusBarFrame = CGRectOffset([UIApplication sharedApplication].statusBarFrame, 0, kStatusBarHeight);
         
 		// only use height of 20px even is status bar is doubled
 		statusBarFrame.size.height = statusBarFrame.size.height == 2*kStatusBarHeight ? kStatusBarHeight : statusBarFrame.size.height;
@@ -295,7 +295,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 		self.hidden = NO;
         
 		// Default Small size: just show Activity Indicator
-		smallFrame_ = CGRectMake(statusBarFrame.size.width - kWidthSmall, 0.f, kWidthSmall, statusBarFrame.size.height);
+		smallFrame_ = CGRectMake(statusBarFrame.size.width - kWidthSmall, 0, kWidthSmall, statusBarFrame.size.height);
         
 		// Default-values
 		animation_ = MTStatusBarOverlayAnimationNone;
@@ -304,7 +304,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
         forcedToHide_ = NO;
         
 		// the detail view that is shown when the user touches the status bar in animation mode "FallDown"
-		detailView_ = [[UIView alloc] initWithFrame:kDefaultDetailViewFrame];
+		//detailView_ = [[UIView alloc] initWithFrame:kDefaultDetailViewFrame];
 		detailView_.backgroundColor = [UIColor blackColor];
 		detailView_.alpha = kDetailViewAlpha;
 		detailView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -321,7 +321,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
          detailView_.layer.shadowOffset = CGSizeMake(0, 3);*/
         
 		// Detail Text label
-		detailTextView_ = [[UITextView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight,
+		detailTextView_ = [[UITextView alloc] initWithFrame:CGRectMake(0, 0,
                                                                        kDefaultDetailViewFrame.size.width, kDefaultDetailViewFrame.size.height - kStatusBarHeight)];
 		detailTextView_.backgroundColor = [UIColor clearColor];
         detailTextView_.userInteractionEnabled = NO;
@@ -852,20 +852,20 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 	CGFloat pi = (CGFloat)M_PI;
 	if (orientation == UIDeviceOrientationPortrait) {
 		self.transform = CGAffineTransformIdentity;
-		self.frame = CGRectMake(0.f,0.f,kScreenWidth,kStatusBarHeight);
-		self.smallFrame = CGRectMake(self.frame.size.width - kWidthSmall, 0.0f, kWidthSmall, self.frame.size.height);
+		self.frame = CGRectMake(0.f,kStatusBarHeight,kScreenWidth,kStatusBarHeight);
+		self.smallFrame = CGRectMake(self.frame.size.width - kWidthSmall, kStatusBarHeight, kWidthSmall, self.frame.size.height);
 	}else if (orientation == UIDeviceOrientationLandscapeLeft) {
 		self.transform = CGAffineTransformMakeRotation(pi * (90.f) / 180.0f);
-		self.frame = CGRectMake(kScreenWidth - kStatusBarHeight,0, kStatusBarHeight, kScreenHeight);
-		self.smallFrame = CGRectMake(kScreenHeight-kWidthSmall,0,kWidthSmall,kStatusBarHeight);
+		self.frame = CGRectMake(kScreenWidth - kStatusBarHeight,kStatusBarHeight, kStatusBarHeight, kScreenHeight);
+		self.smallFrame = CGRectMake(kScreenHeight-kWidthSmall,kStatusBarHeight,kWidthSmall,kStatusBarHeight);
 	} else if (orientation == UIDeviceOrientationLandscapeRight) {
 		self.transform = CGAffineTransformMakeRotation(pi * (-90.f) / 180.0f);
-		self.frame = CGRectMake(0.f,0.f, kStatusBarHeight, kScreenHeight);
-		self.smallFrame = CGRectMake(kScreenHeight-kWidthSmall,0.f, kWidthSmall, kStatusBarHeight);
+		self.frame = CGRectMake(0.f,kStatusBarHeight, kStatusBarHeight, kScreenHeight);
+		self.smallFrame = CGRectMake(kScreenHeight-kWidthSmall,kStatusBarHeight, kWidthSmall, kStatusBarHeight);
 	} else if (orientation == UIDeviceOrientationPortraitUpsideDown) {
 		self.transform = CGAffineTransformMakeRotation(pi);
 		self.frame = CGRectMake(0.f,kScreenHeight - kStatusBarHeight,kScreenWidth,kStatusBarHeight);
-		self.smallFrame = CGRectMake(self.frame.size.width - kWidthSmall, 0.f, kWidthSmall, self.frame.size.height);
+		self.smallFrame = CGRectMake(self.frame.size.width - kWidthSmall, kStatusBarHeight, kWidthSmall, self.frame.size.height);
 	}
     
     self.backgroundView.frame = [self backgroundViewFrameForStatusBarInterfaceOrientation];
@@ -1370,7 +1370,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
     UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     
     return (UIInterfaceOrientationIsLandscape(interfaceOrientation) ? 
-            CGRectMake(0, 0, kScreenHeight, kStatusBarHeight) : 
+            CGRectMake(0, 0, kScreenHeight, kStatusBarHeight) :
             CGRectMake(0, 0, kScreenWidth, kStatusBarHeight));
 }
 
